@@ -1,6 +1,8 @@
 package com.hostmdy.shop.resource;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,8 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hostmdy.shop.domain.User;
+import com.hostmdy.shop.domain.security.Role;
+import com.hostmdy.shop.domain.security.UserRoles;
+import com.hostmdy.shop.service.RoleService;
 import com.hostmdy.shop.service.UserService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -24,6 +30,7 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
 	
 	private final UserService userService;
+	private final RoleService roleService;
 	
 	 @GetMapping("/username/{username}")
      public ResponseEntity<?> getUserByUsername(@PathVariable String username) {
@@ -38,7 +45,7 @@ public class UserController {
 	 }
 	 
 	 @GetMapping("/id/{id}")
-     public ResponseEntity<?> getUserByUsername(@PathVariable Long id) {
+     public ResponseEntity<?> getUserById(@PathVariable Long id) {
 		
 		 Optional<User> userOpt = userService.findById(id);
 		 
@@ -50,7 +57,17 @@ public class UserController {
 	 }
 	 
 	 @PostMapping("/create")
-	 public ResponseEntity<User> register(@RequestBody User user) {
-		 return new ResponseEntity<User>(userService.saveUser(user), HttpStatus.CREATED);
+	 public ResponseEntity<?> register(@Valid @RequestBody User user) {
+		 Optional<Role> roleOpt = roleService.findById(1L);
+		 
+		 if(roleOpt.isEmpty()) {
+			 return new ResponseEntity<String>("role not found",HttpStatus.INTERNAL_SERVER_ERROR);
+		 }
+		 
+		 Set<UserRoles> userRoles = new HashSet<>();
+		 userRoles.add(new UserRoles(user, roleOpt.get()));
+		 
+		 
+		 return new ResponseEntity<User>(userService.createUser(user, userRoles), HttpStatus.CREATED);
 	 }
 }

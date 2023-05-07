@@ -29,5 +29,15 @@ public class CustomUserDetailsService implements UserDetailsService{
 		
 		return userOpt.get();
 	}
+	
+	public User loadUserById(Long id) throws UsernameNotFoundException{
+		Optional<User> userOpt = userRepository.findById(id);
+		
+		if(userOpt.isEmpty()) {
+			throw new UsernameNotFoundException("UserId is not found!");
+		}
+		
+		return userOpt.get();
+	}
 
 }
