@@ -8,4 +8,7 @@ import com.hostmdy.shop.domain.User;
 
 public interface UserRepository extends CrudRepository<User,Long>{
 	 Optional<User> findByUsername(String username);
+	 
+	 Optional<User> findByFullname(String fullname);
+	 
 }

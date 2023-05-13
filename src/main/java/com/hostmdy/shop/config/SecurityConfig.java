@@ -9,6 +9,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.hostmdy.shop.service.impl.CustomUserDetailsService;
 
@@ -20,10 +22,16 @@ public class SecurityConfig {
 	
 	private final CustomUserDetailsService customUserDetailsService;
 	private final JWTAuthenticationEntryPoint authenticationEntryPoint;
+	private final JwtTokenProvider jwtTokenProvider;
 	
 	private static final String[] PUBLIC_MATCHERS = {
 			"/api/user/**"
 	};
+	
+	@Bean
+	public JwtAuthenticationFilter authenticationFilter() {
+		return new JwtAuthenticationFilter(jwtTokenProvider, customUserDetailsService);
+	}
 	
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -33,10 +41,14 @@ public class SecurityConfig {
 			.and()
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and()
+			.headers().frameOptions().sameOrigin()
+			.and()
 			.authorizeHttpRequests()
+			.requestMatchers(new AntPathRequestMatcher("/h2-console/**")).permitAll()
 			.requestMatchers(PUBLIC_MATCHERS).permitAll()
 			.anyRequest().authenticated();
 		http.authenticationProvider(daoProvider());
+		http.addFilterBefore(authenticationFilter(),UsernamePasswordAuthenticationFilter.class);
 			
 		return http.build();
 		

@@ -1,9 +1,11 @@
 package com.hostmdy.shop.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.repository.CrudRepository;
 
 import com.hostmdy.shop.domain.security.Role;
 
 public interface RoleRepository extends CrudRepository<Role,Long>{
-
+	Optional<Role> findByName(String name);
 }

@@ -3,6 +3,8 @@ package com.hostmdy.shop.domain.security;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -21,6 +23,7 @@ public class Role {
 	private String name;
 	
 	@OneToMany(mappedBy = "role",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	@JsonIgnore
 	private Set<UserRoles> userRoles = new HashSet<>();
 	
 	
