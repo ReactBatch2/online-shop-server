@@ -1,6 +1,7 @@
 package com.hostmdy.shop.domain;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -56,18 +57,24 @@ public class User implements UserDetails{
 	@Column(updatable = false,nullable = false)
 	private String username;
 	
+	@NotBlank(message = "phone is required")
+	private String phone;
+	
 	@NotBlank(message = "password is required")
 	private String password;
 	
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
+	@JsonIgnore
 	private ShoppingCart shoppingCart;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-	private List<UserShipping> userShippingList;
+	@JsonIgnore
+	private List<UserShipping> userShippingList = new ArrayList<>();
 	
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-	private List<UserPayment> userPaymentList;
+	@JsonIgnore
+	private List<UserPayment> userPaymentList = new ArrayList<>();
 
 	
 	private LocalDateTime createdAt;

@@ -56,7 +56,7 @@ public class ProductController {
 		List<Product> productList = productService.findAll();
 		
 		if(productList.isEmpty())
-			return new ResponseEntity<String>("no product found",HttpStatus.NO_CONTENT);
+			return new ResponseEntity<String>("no product found",HttpStatus.NOT_FOUND);
 		
 		return new ResponseEntity<List<Product>>(productList,HttpStatus.OK);
 	}

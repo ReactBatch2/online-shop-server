@@ -1,6 +1,7 @@
 package com.hostmdy.shop.domain;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
@@ -62,7 +63,7 @@ public class Product {
 	
 	@OneToMany(mappedBy = "product")
 	@JsonIgnore
-	private List<ProductToCartItem> productToCartItem;
+	private List<ProductToCartItem> productToCartItem = new ArrayList<>();
 	
 	@PrePersist
 	public void onCreate() {

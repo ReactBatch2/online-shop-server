@@ -35,8 +35,9 @@ public class OrderServiceImpl implements OrderService{
 			Payment payment,
 			String shippingMethod,
 			User user) {
+		
+		payment.setBillingAddress(billingAddress);
 		Order order = new Order();
-		order.setBillingAddress(billingAddress);
 		order.setOrderStatus("created");
 		order.setPayment(payment);
 		order.setShippingAddress(shippingAddress);
@@ -54,7 +55,6 @@ public class OrderServiceImpl implements OrderService{
 		order.setOrderDate(LocalDateTime.now());
 		order.setOrderTotal(shoppingCart.getGrandTotal());
 		shippingAddress.setOrder(order);
-		billingAddress.setOrder(order);
 		payment.setOrder(order);
 		order.setUser(user);
 		order = orderRepository.save(order);

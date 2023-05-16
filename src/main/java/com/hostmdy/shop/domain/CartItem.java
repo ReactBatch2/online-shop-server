@@ -1,6 +1,7 @@
 package com.hostmdy.shop.domain;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -32,7 +33,7 @@ public class CartItem {
 	
 	@OneToMany(mappedBy = "cartItem")
 	@JsonIgnore
-	private List<ProductToCartItem> productToCartItemList;
+	private List<ProductToCartItem> productToCartItemList = new ArrayList<>();
 	
 	@ManyToOne
 	@JoinColumn(name="shopping_cart_id")

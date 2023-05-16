@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class CustomUserDetailsService implements UserDetailsService{
 	
 	private final UserRepository userRepository;
@@ -31,7 +32,6 @@ public class CustomUserDetailsService implements UserDetailsService{
 		return userOpt.get();
 	}
 	
-	@Transactional
 	public User loadUserById(Long id) throws UsernameNotFoundException{
 		Optional<User> userOpt = userRepository.findById(id);
 		

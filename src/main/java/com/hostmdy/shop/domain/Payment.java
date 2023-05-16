@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,7 +28,8 @@ public class Payment {
 	@OneToOne(mappedBy = "payment")
 	private Order order;
 	
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "userPayment")
-	private UserBilling userBilling;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "billing_address_id")
+	private BillingAddress billingAddress;
 
 }

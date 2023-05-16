@@ -2,6 +2,7 @@ package com.hostmdy.shop.domain;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -32,15 +33,11 @@ public class Order {
 	private BigDecimal orderTotal;
 	
 	@OneToMany(mappedBy = "order", cascade=CascadeType.ALL )
-	private List<CartItem> cartItemList;
+	private List<CartItem> cartItemList = new ArrayList<>();
 	
 	@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name = "shipping_address_id")
 	private ShippingAddress shippingAddress;
-	
-	@OneToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name = "billing_address_id")
-	private BillingAddress billingAddress;
 	
 	@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name = "payment_id")

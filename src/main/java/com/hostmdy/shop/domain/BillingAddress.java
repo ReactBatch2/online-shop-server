@@ -25,6 +25,6 @@ public class BillingAddress {
 	private String BillingAddressZipcode;
 	
 	@OneToOne(mappedBy = "billingAddress")
-	private Order order;
+	private Payment payment;
 
 }
