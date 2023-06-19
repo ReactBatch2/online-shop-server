@@ -25,7 +25,7 @@ public class SecurityConfig {
 	private final JwtTokenProvider jwtTokenProvider;
 	
 	private static final String[] PUBLIC_MATCHERS = {
-			"/api/user/**"
+			"/api/user/**","/api/email/**"
 	};
 	
 	@Bean
