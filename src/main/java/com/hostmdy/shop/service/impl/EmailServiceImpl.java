@@ -5,6 +5,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 
+import com.hostmdy.shop.payload.AttachmentEmailRequest;
 import com.hostmdy.shop.payload.OrderConfirmEmailRequest;
 import com.hostmdy.shop.payload.SimpleEmailRequest;
 import com.hostmdy.shop.service.EmailService;
@@ -30,6 +31,13 @@ public class EmailServiceImpl implements EmailService{
 	public void sendTemplateEmail(OrderConfirmEmailRequest email) {
 		// TODO Auto-generated method stub
 		MimeMessagePreparator mail = mailConstructor.constructTemplateMail(email.getTo(),email.getSubject(),email.getOrderRequest());
+		sender.send(mail);
+	}
+
+	@Override
+	public void sendAttachmentEmail(AttachmentEmailRequest email) {
+		// TODO Auto-generated method stub
+		MimeMessagePreparator mail = mailConstructor.constructAttachmentMail(email.getTo(),email.getSubject(),email.getFilePath(),email.getText());
 		sender.send(mail);
 	}
 

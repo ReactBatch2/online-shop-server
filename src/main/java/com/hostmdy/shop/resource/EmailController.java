@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hostmdy.shop.payload.AttachmentEmailRequest;
 import com.hostmdy.shop.payload.OrderConfirmEmailRequest;
 import com.hostmdy.shop.payload.SimpleEmailRequest;
 import com.hostmdy.shop.service.EmailService;
@@ -31,5 +32,14 @@ public class EmailController {
 		
 		return ResponseEntity.ok("Email Sent");
 	}
+	
+	@PostMapping("/attachment")
+	public ResponseEntity<String> sendAttachmentEmail(@RequestBody AttachmentEmailRequest emailRequest){
+		emailService.sendAttachmentEmail(emailRequest);
+		
+		return ResponseEntity.ok("Email Sent");
+	}
+	
+	
 
 }
