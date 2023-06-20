@@ -1,9 +1,12 @@
 package com.hostmdy.shop.service;
 
-import com.hostmdy.shop.payload.EmailRequest;
+import com.hostmdy.shop.payload.OrderConfirmEmailRequest;
+import com.hostmdy.shop.payload.SimpleEmailRequest;
 
 public interface EmailService {
 	
-	void sendEmail(EmailRequest email);
+	void sendEmail(SimpleEmailRequest email);
+	
+	void sendTemplateEmail(OrderConfirmEmailRequest email);
 
 }
